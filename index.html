@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Universe — A Poetry Space</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;1,300&family=Caveat:wght@400;500;600&family=Noto+Sans+Devanagari:wght@300;400;500&family=Noto+Serif+Devanagari:wght@300;400;500&family=Noto+Sans:wght@300;400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES — THEME SYSTEM
+   ============================================================ */
+:root {
+  /* Default: Soft Light */
+  --bg-primary: #fdf6f0;
+  --bg-secondary: #fff9f5;
+  --bg-card: rgba(255,255,255,0.72);
+  --bg-glass: rgba(255,248,240,0.6);
+  --border: rgba(200,170,150,0.22);
+  --accent-1: #c9845a;
+  --accent-2: #e8a598;
+  --accent-3: #b89bb4;
+  --text-primary: #3a2e2a;
+  --text-secondary: #7a6560;
+  --text-muted: #b0998f;
+  --heart: #e8806a;
+  --glow: rgba(201,132,90,0.15);
+  --shadow: rgba(100,60,40,0.10);
+  --tag-bg: rgba(201,132,90,0.10);
+  --tag-text: #c9845a;
+  --modal-bg: rgba(60,35,25,0.45);
+  --music-btn: rgba(201,132,90,0.12);
+  --note-bg: rgba(255,245,235,0.85);
+  --dedication-bg: linear-gradient(135deg, #fde8e0 0%, #f5e6f0 100%);
+  --welcome-bg: linear-gradient(160deg, #fdf0e8 0%, #f8e8f4 50%, #eee8f8 100%);
+  --scrollbar: #e4c5b5;
+  --input-bg: rgba(255,255,255,0.8);
+  --btn-primary-bg: linear-gradient(135deg, #c9845a, #e8a598);
+  --btn-primary-text: #fff;
+  --nav-bg: rgba(253,246,240,0.88);
+  --floating-color: rgba(201,132,90,0.08);
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'DM Sans', sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1a1520;
+  --bg-secondary: #201b28;
+  --bg-card: rgba(38,32,50,0.82);
+  --bg-glass: rgba(30,24,40,0.72);
+  --border: rgba(150,120,180,0.18);
+  --accent-1: #b89bb4;
+  --accent-2: #9b7eb8;
+  --accent-3: #c9a8c8;
+  --text-primary: #ede4f4;
+  --text-secondary: #a893b8;
+  --text-muted: #7a6890;
+  --heart: #d47aaa;
+  --glow: rgba(184,155,180,0.12);
+  --shadow: rgba(0,0,0,0.35);
+  --tag-bg: rgba(184,155,180,0.12);
+  --tag-text: #c9a8c8;
+  --modal-bg: rgba(10,6,18,0.65);
+  --music-btn: rgba(184,155,180,0.12);
+  --note-bg: rgba(38,30,52,0.9);
+  --dedication-bg: linear-gradient(135deg, #2a1f38 0%, #1e1830 100%);
+  --welcome-bg: linear-gradient(160deg, #1e1830 0%, #231825 50%, #1a1c35 100%);
+  --scrollbar: #4a3860;
+  --input-bg: rgba(40,32,55,0.8);
+  --btn-primary-bg: linear-gradient(135deg, #9b7eb8, #c9a8c8);
+  --btn-primary-text: #fff;
+  --nav-bg: rgba(26,21,32,0.92);
+  --floating-color: rgba(184,155,180,0.06);
+}
+
+[data-theme="romantic"] {
+  --bg-primary: #fff0f5;
+  --bg-secondary: #fff5f8;
+  --bg-card: rgba(255,245,250,0.78);
+  --bg-glass: rgba(255,240,248,0.65);
+  --border: rgba(220,150,180,0.22);
+  --accent-1: #d4638a;
+  --accent-2: #e896b0;
+  --accent-3: #c278a8;
+  --text-primary: #3a1f2e;
+  --text-secondary: #8a5068;
+  --text-muted: #c090a8;
+  --heart: #e05080;
+  --glow: rgba(212,99,138,0.14);
+  --shadow: rgba(120,40,70,0.10);
+  --tag-bg: rgba(212,99,138,0.10);
+  --tag-text: #d4638a;
+  --modal-bg: rgba(60,20,40,0.48);
+  --music-btn: rgba(212,99,138,0.10);
+  --note-bg: rgba(255,240,248,0.9);
+  --dedication-bg: linear-gradient(135deg, #ffd6e8 0%, #ffe0f0 100%);
+  --welcome-bg: linear-gradient(160deg, #ffe8f0 0%, #ffd6e8 50%, #f8d8f0 100%);
+  --scrollbar: #f0b0cc;
+  --input-bg: rgba(255,248,252,0.85);
+  --btn-primary-bg: linear-gradient(135deg, #d4638a, #e896b0);
+  --btn-primary-text: #fff;
+  --nav-bg: rgba(255,240,248,0.90);
+  --floating-color: rgba(212,99,138,0.07);
+}
+
+[data-theme="minimal"] {
+  --bg-primary: #f8f8f6;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255,255,255,0.9);
+  --bg-glass: rgba(248,248,246,0.75);
+  --border: rgba(0,0,0,0.10);
+  --accent-1: #222222;
+  --accent-2: #555555;
+  --accent-3: #888888;
+  --text-primary: #111111;
+  --text-secondary: #444444;
+  --text-muted: #888888;
+  --heart: #333333;
+  --glow: rgba(0,0,0,0.04);
+  --shadow: rgba(0,0,0,0.08);
+  --tag-bg: rgba(0,0,0,0.05);
+  --tag-text: #333333;
+  --modal-bg: rgba(0,0,0,0.50);
+  --music-btn: rgba(0,0,0,0.06);
+  --note-bg: rgba(248,248,246,0.92);
+  --dedication-bg: linear-gradient(135deg, #f0f0ee 0%, #e8e8e6 100%);
+  --welcome-bg: linear-gradient(160deg, #f8f8f6 0%, #f0f0ee 100%);
+  --scrollbar: #cccccc;
+  --input-bg: rgba(255,255,255,0.95);
+  --btn-primary-bg: linear-gradient(135deg, #222, #555);
+  --btn-primary-text: #fff;
+  --nav-bg: rgba(248,248,246,0.92);
+  --floating-color: rgba(0,0,0,0.03);
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  line-height: 1.7;
+}
+
+/* Font classes */
+body.font-serif { --font-body: 'Cormorant Garamond', Georgia, serif; }
+body.font-sans  { --font-body: 'DM Sans', 'Noto Sans', sans-serif; }
+body.font-hand  { --font-body: 'Caveat', cursive; }
+body.font-play  { --font-body: 'Playfair Display', 'Libre Baskerville', Georgia, serif; }
+body.font-bask  { --font-body: 'Libre Baskerville', Georgia, serif; }
+
+/* Hindi font override via lang tag */
+[lang="hi"], .lang-hi {
+  font-family: 'Noto Serif Devanagari', 'Noto Sans Devanagari', serif;
+}
+body.font-sans [lang="hi"], body.font-sans .lang-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+body.font-hand [lang="hi"], body.font-hand .lang-hi {
+  font-family: 'Noto Serif Devanagari', cursive;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 10px; }
+
+/* ============================================================
+   NOISE OVERLAY
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--noise);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   FLOATING PETALS / PARTICLES
+   ============================================================ */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  font-size: 1rem;
+  opacity: 0;
+  animation: floatUp var(--dur, 12s) var(--delay, 0s) infinite ease-in-out;
+  color: var(--accent-1);
+  filter: blur(0.5px);
+  will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.35; }
+  90%  { opacity: 0.18; }
+  100% { transform: translateY(-12vh) translateX(var(--dx, 30px)) rotate(var(--rot,180deg)); opacity: 0; }
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  transition: background 0.5s;
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--accent-1);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-logo span { font-style: normal; opacity: 0.5; margin: 0 4px; }
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
+}
+
+.nav-btn {
+  background: var(--music-btn);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+  border-radius: 50px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.nav-btn:hover { background: var(--accent-1); color: #fff; border-color: var(--accent-1); }
+.nav-btn.active { background: var(--accent-1); color: #fff; border-color: var(--accent-1); }
+
+.nav-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  padding: 0.35rem;
+  border-radius: 50%;
+  transition: transform 0.25s, color 0.25s;
+  line-height: 1;
+}
+.nav-icon-btn:hover { transform: scale(1.15); color: var(--accent-1); }
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+main {
+  position: relative;
+  z-index: 10;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 80px 1.5rem 4rem;
+}
+
+/* ============================================================
+   WELCOME SECTION
+   ============================================================ */
+#section-welcome {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 0;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.welcome-bg-blob {
+  position: fixed;
+  z-index: 2;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  transition: background 0.8s;
+}
+.blob-1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
+  top: -100px; right: -80px; opacity: 0.22;
+}
+.blob-2 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, var(--accent-3) 0%, transparent 70%);
+  bottom: 80px; left: -60px; opacity: 0.18;
+}
+
+.welcome-icon {
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.welcome-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.welcome-subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+  margin-bottom: 2rem;
+}
+
+.welcome-letter {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.2rem 2.5rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  text-align: left;
+  box-shadow: 0 8px 40px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.welcome-letter::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem; left: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem;
+  color: var(--accent-1);
+  opacity: 0.08;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.welcome-letter p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  font-style: italic;
+}
+.welcome-letter .sign {
+  margin-top: 1.2rem;
+  font-size: 1.3rem;
+  color: var(--accent-1);
+  font-style: normal;
+  font-family: 'Caveat', cursive;
+}
+
+.welcome-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: none;
+  border-radius: 50px;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px var(--glow);
+  text-transform: uppercase;
+}
+.welcome-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--glow); }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { display: none; animation: fadeUp 0.6s ease forwards; }
+.section.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   FILTER BAR
+   ============================================================ */
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent-1);
+  color: #fff;
+  border-color: var(--accent-1);
+}
+
+/* ============================================================
+   POST CARDS
+   ============================================================ */
+.posts-grid { display: grid; gap: 1.5rem; }
+
+.post-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 2px 20px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.post-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glow);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.post-card:hover { transform: translateY(-4px); box-shadow: 0 10px 40px var(--shadow); }
+.post-card:hover::after { opacity: 1; }
+
+.post-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.post-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.post-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+
+.tag {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+}
+
+.author-tag {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--accent-3);
+}
+
+.post-date {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.post-card-preview {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+}
+
+.heart-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font-ui);
+  transition: all 0.2s;
+  padding: 0.25rem 0;
+}
+.heart-btn:hover { color: var(--heart); }
+.heart-btn .heart-icon { font-size: 1rem; transition: transform 0.2s; }
+.heart-btn:hover .heart-icon { transform: scale(1.3); }
+.heart-btn.liked { color: var(--heart); }
+.heart-btn.liked .heart-icon { animation: heartPop 0.3s ease; }
+
+@keyframes heartPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.read-more {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-1);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   POST MODAL / READING MODE
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--modal-bg);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem 3.5rem;
+  max-width: 680px;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  position: relative;
+  transform: translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-close {
+  position: absolute;
+  top: 1.2rem; right: 1.4rem;
+  background: var(--music-btn);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: var(--accent-1); color: #fff; }
+
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-content {
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  letter-spacing: 0.01em;
+}
+
+.modal-content.type-poem {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 2.1;
+}
+
+.modal-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ============================================================
+   DEDICATION SECTION
+   ============================================================ */
+#section-dedication {
+  background: var(--dedication-bg);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#section-dedication::before {
+  content: '✦';
+  position: absolute;
+  font-size: 12rem;
+  opacity: 0.04;
+  top: -2rem;
+  right: -1rem;
+  color: var(--accent-1);
+  pointer-events: none;
+}
+
+.dedication-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--accent-1);
+  margin-bottom: 1rem;
+}
+.dedication-text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.dedication-sign {
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--accent-3);
+  margin-top: 1.2rem;
+}
+
+/* ============================================================
+   NOTES / MEMORY SECTION
+   ============================================================ */
+.notes-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+
+.note-card {
+  background: var(--note-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  position: relative;
+  transition: transform 0.25s;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.note-card:hover { transform: rotate(-0.5deg) translateY(-3px); }
+.note-card-text {
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.note-card-meta {
+  margin-top: 0.8rem;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+.note-delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0;
+  transition: color 0.2s;
+  display: none;
+}
+.note-delete-btn:hover { color: var(--heart); }
+body.logged-in .note-delete-btn { display: inline; }
+
+.add-note-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  margin-bottom: 1.5rem;
+  display: none;
+}
+body.logged-in .add-note-form { display: block; }
+
+/* ============================================================
+   FORMS & INPUTS
+   ============================================================ */
+.form-group { margin-bottom: 1.2rem; }
+.form-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  -webkit-appearance: none;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+.form-textarea {
+  min-height: 220px;
+  resize: vertical;
+  line-height: 1.9;
+}
+.form-select { cursor: pointer; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  border-radius: 50px;
+  padding: 0.75rem 1.8rem;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: 0 4px 16px var(--glow);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--glow); }
+.btn-secondary {
+  background: var(--music-btn);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); }
+.btn-danger {
+  background: rgba(220,80,80,0.10);
+  color: #cc5050;
+  border: 1px solid rgba(220,80,80,0.18);
+}
+.btn-danger:hover { background: rgba(220,80,80,0.18); }
+
+/* ============================================================
+   WRITE / EDITOR
+   ============================================================ */
+.editor-header {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 16px var(--shadow);
+}
+.editor-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+/* Dashboard post list */
+.dashboard-post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 0.8rem;
+  transition: box-shadow 0.25s;
+  flex-wrap: wrap;
+}
+.dashboard-post:hover { box-shadow: 0 4px 20px var(--shadow); }
+.dashboard-post-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text-primary);
+  flex: 1;
+}
+.dashboard-post-actions { display: flex; gap: 0.5rem; }
+
+/* ============================================================
+   LOGIN MODAL
+   ============================================================ */
+#login-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--modal-bg);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+  backdrop-filter: blur(8px);
+}
+#login-modal.open { opacity: 1; pointer-events: all; }
+
+.login-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 2.5rem 2.8rem;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  transform: scale(0.95) translateY(16px);
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+  text-align: center;
+}
+#login-modal.open .login-box { transform: scale(1) translateY(0); }
+
+.login-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+.login-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-style: italic;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+}
+.login-sub {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.04em;
+}
+.login-error {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: #cc5050;
+  margin-top: 0.8rem;
+  min-height: 1.1em;
+}
+
+/* ============================================================
+   MUSIC PLAYER (minimal)
+   ============================================================ */
+#music-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  z-index: 1500;
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 32px var(--shadow);
+  transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+  white-space: nowrap;
+}
+#music-bar.visible { transform: translateX(-50%) translateY(0); }
+.music-label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.music-play-btn {
+  background: var(--btn-primary-bg);
+  border: none;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 0.8rem;
+  transition: transform 0.2s;
+}
+.music-play-btn:hover { transform: scale(1.1); }
+.music-vol {
+  width: 70px;
+  accent-color: var(--accent-1);
+  cursor: pointer;
+}
+.music-note-anim {
+  font-size: 0.9rem;
+  animation: float 2s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ============================================================
+   DROPDOWN MENUS
+   ============================================================ */
+.dropdown-wrap { position: relative; }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.5rem;
+  box-shadow: 0 12px 40px var(--shadow);
+  z-index: 2000;
+  display: none;
+  animation: fadeDown 0.2s ease;
+}
+.dropdown-menu.open { display: block; }
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.dropdown-item:hover { background: var(--tag-bg); color: var(--accent-1); }
+.dropdown-item.active { color: var(--accent-1); font-weight: 500; }
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-muted);
+}
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+.empty-state p { font-style: italic; font-size: 1.1rem; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+#toast {
+  position: fixed;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  box-shadow: 0 8px 24px var(--shadow);
+  z-index: 5000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  nav { padding: 0 1rem; }
+  main { padding: 72px 1rem 3rem; }
+  .modal-box { padding: 2rem 1.4rem; }
+  .welcome-letter { padding: 1.6rem 1.4rem; }
+  .login-box { padding: 2rem 1.6rem; }
+  #section-dedication { padding: 2rem 1.4rem; }
+  .notes-grid { grid-template-columns: 1fr; }
+  .nav-logo { font-size: 1.1rem; }
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.hidden { display: none !important; }
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.text-accent { color: var(--accent-1); }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+</style>
+</head>
+
+<body class="font-serif" data-theme="light">
+
+<!-- =============== BLOBS =============== -->
+<div class="welcome-bg-blob blob-1"></div>
+<div class="welcome-bg-blob blob-2"></div>
+
+<!-- =============== PARTICLES =============== -->
+<div class="particles" id="particles"></div>
+
+<!-- =============== TOAST =============== -->
+<div id="toast"></div>
+
+<!-- =============== MUSIC BAR =============== -->
+<div id="music-bar">
+  <span class="music-note-anim">♪</span>
+  <span class="music-label">Ambient</span>
+  <button class="music-play-btn" id="music-play-btn" title="Play/Pause">▶</button>
+  <input type="range" class="music-vol" id="music-vol" min="0" max="1" step="0.05" value="0.3">
+  <button class="nav-icon-btn" id="music-close-btn" title="Close" style="font-size:0.8rem;">✕</button>
+</div>
+
+<!-- =============== NAV =============== -->
+<nav>
+  <div class="nav-logo" onclick="showSection('welcome')">Our Little Universe <span>✦</span> एक अपनी दुनिया</div>
+  
+  <div class="nav-controls">
+    <!-- Font switcher -->
+    <div class="dropdown-wrap">
+      <button class="nav-btn" id="font-btn" onclick="toggleDropdown('font-menu')">Aa ▾</button>
+      <div class="dropdown-menu" id="font-menu">
+        <div class="dropdown-item active" onclick="setFont('serif','font-menu')">✦ Serif (Cormorant)</div>
+        <div class="dropdown-item" onclick="setFont('play','font-menu')">✦ Playfair</div>
+        <div class="dropdown-item" onclick="setFont('bask','font-menu')">✦ Baskerville</div>
+        <div class="dropdown-item" onclick="setFont('sans','font-menu')">✦ Sans-serif</div>
+        <div class="dropdown-item" onclick="setFont('hand','font-menu')">✦ Handwritten</div>
+      </div>
+    </div>
+
+    <!-- Theme switcher -->
+    <div class="dropdown-wrap">
+      <button class="nav-btn" id="theme-btn" onclick="toggleDropdown('theme-menu')">🎨 ▾</button>
+      <div class="dropdown-menu" id="theme-menu">
+        <div class="dropdown-item active" onclick="setTheme('light','theme-menu')">☀️ Soft Light</div>
+        <div class="dropdown-item" onclick="setTheme('dark','theme-menu')">🌙 Dark</div>
+        <div class="dropdown-item" onclick="setTheme('romantic','theme-menu')">🌸 Romantic</div>
+        <div class="dropdown-item" onclick="setTheme('minimal','theme-menu')">◻ Minimal</div>
+      </div>
+    </div>
+
+    <!-- Music toggle -->
+    <button class="nav-icon-btn" onclick="toggleMusic()" title="Music">♪</button>
+
+    <!-- Nav links -->
+    <button class="nav-btn" onclick="showSection('poems')">Read</button>
+    <button class="nav-btn" onclick="showSection('memories')">Notes</button>
+    <button class="nav-btn" id="write-nav-btn" onclick="showWriteSection()" style="display:none;">Write</button>
+
+    <!-- Auth -->
+    <button class="nav-icon-btn" id="auth-btn" onclick="showLogin()" title="Enter as Author">🔑</button>
+    <button class="nav-icon-btn hidden" id="logout-btn" onclick="logout()" title="Logout">👋</button>
+  </div>
+</nav>
+
+<!-- =============== MAIN =============== -->
+<main>
+
+  <!-- WELCOME -->
+  <section id="section-welcome" class="section active">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:2rem 0;">
+      <div class="welcome-icon">🌿</div>
+      <h1 class="welcome-title">Our Little Universe</h1>
+      <p class="welcome-subtitle">✦ एक अपनी दुनिया ✦</p>
+
+      <div class="welcome-letter">
+        <p>To the one who turned ordinary days into poems — this space is built from everything we've felt, every late-night conversation, every word we searched for and couldn't find, and every silence that said more than words ever could.</p>
+        <p style="margin-top:1rem;">Here, in this quiet corner of the internet, our words live forever.</p>
+        <div class="sign">— always, yours ✦</div>
+      </div>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+        <button class="welcome-cta" onclick="showSection('poems')">
+          📖 Read Our Words
+        </button>
+        <button class="welcome-cta" style="background:var(--music-btn);color:var(--text-secondary);box-shadow:none;border:1px solid var(--border);" onclick="showSection('dedication')">
+          💌 Dedication
+        </button>
+      </div>
+
+      <p style="margin-top:3rem;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);">
+        Scroll to explore ↓
+      </p>
+    </div>
+  </section>
+
+  <!-- DEDICATION -->
+  <section id="section-dedication" class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-subtitle">For You</div>
+        <h2 class="section-title">A Dedication</h2>
+      </div>
+    </div>
+
+    <div style="background:var(--dedication-bg);border-radius:24px;padding:3rem 2.5rem;text-align:center;position:relative;overflow:hidden;margin-bottom:2rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">💌</div>
+      <h3 class="dedication-title">To my favourite person</h3>
+      <p class="dedication-text">
+        You who reads between the lines, who finds meaning in the pauses — this little universe was built for your eyes. Every poem here carries a piece of something real, something felt, something that could only ever belong to us.<br><br>
+        Whether it's 3am in Hindi or a quiet afternoon in English, this is where our words come to rest.
+      </p>
+      <div class="dedication-sign">तुम्हारे लिए, हमेशा ✦</div>
+    </div>
+
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:2rem;text-align:center;">
+      <p style="font-family:'Caveat',cursive;font-size:1.6rem;color:var(--text-secondary);line-height:1.8;">
+        "कुछ बातें शब्दों में नहीं कहीं जातीं —<br>
+        वो सिर्फ महसूस होती हैं।"
+      </p>
+      <p style="margin-top:1rem;font-size:0.9rem;color:var(--text-muted);font-style:italic;">
+        "Some things cannot be said in words — they can only be felt."
+      </p>
+    </div>
+  </section>
+
+  <!-- POEMS / STORIES -->
+  <section id="section-poems" class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-subtitle">A Collection</div>
+        <h2 class="section-title">Poems & Stories</h2>
+      </div>
+      <button class="btn btn-primary hidden" id="new-post-btn" onclick="showSection('write')">+ New</button>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="filterPosts('all', this)">All</button>
+      <button class="filter-btn" onclick="filterPosts('poem', this)">Poems</button>
+      <button class="filter-btn" onclick="filterPosts('story', this)">Stories</button>
+      <button class="filter-btn" onclick="filterPosts('en', this)">English</button>
+      <button class="filter-btn" onclick="filterPosts('hi', this)">हिंदी</button>
+      <button class="filter-btn" onclick="filterPosts('her', this)">Her</button>
+      <button class="filter-btn" onclick="filterPosts('me', this)">Me</button>
+    </div>
+
+    <div class="posts-grid" id="posts-grid"></div>
+  </section>
+
+  <!-- MEMORIES / NOTES -->
+  <section id="section-memories" class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-subtitle">Our Little</div>
+        <h2 class="section-title">Memory Wall</h2>
+      </div>
+    </div>
+
+    <div class="add-note-form" id="add-note-form">
+      <div class="form-group">
+        <label class="form-label">Leave a note or memory ✦</label>
+        <textarea class="form-textarea" id="note-input" placeholder="Write a small thought, memory, or feeling here..." style="min-height:100px;"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="addNote()">Save Note</button>
+    </div>
+
+    <div class="notes-grid" id="notes-grid"></div>
+  </section>
+
+  <!-- WRITE / EDITOR -->
+  <section id="section-write" class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-subtitle">Your Words</div>
+        <h2 class="section-title" id="editor-title">Write Something</h2>
+      </div>
+      <button class="btn btn-secondary" onclick="showSection('poems')">← Back</button>
+    </div>
+
+    <div class="editor-header">
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" id="post-title" placeholder="Give it a beautiful title…">
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="post-type">
+            <option value="poem">Poem</option>
+            <option value="story">Story</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Language</label>
+          <select class="form-select" id="post-lang">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="both">Both / Mixed</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Author</label>
+          <select class="form-select" id="post-author">
+            <option value="her">Her</option>
+            <option value="me">Me</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Content</label>
+      <textarea class="form-textarea" id="post-content" placeholder="Let the words flow…" style="min-height:320px;"></textarea>
+    </div>
+
+    <div class="editor-actions">
+      <button class="btn btn-primary" onclick="savePost()">✦ Publish</button>
+      <button class="btn btn-secondary" onclick="clearEditor()">Clear</button>
+      <button class="btn btn-danger hidden" id="delete-post-btn" onclick="deleteCurrentPost()">Delete Post</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- =============== POST MODAL =============== -->
+<div class="modal-overlay" id="post-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-content" id="modal-content"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- =============== LOGIN MODAL =============== -->
+<div id="login-modal">
+  <div class="login-box">
+    <div class="login-icon">🔑</div>
+    <h2 class="login-title">Enter as Author</h2>
+    <p class="login-sub">This private space is for two people who write.</p>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="login-password" placeholder="your secret word…" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()">Enter ✦</button>
+    <div class="login-error" id="login-error"></div>
+    <button style="margin-top:1rem;background:none;border:none;cursor:pointer;font-family:var(--font-ui);font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;" onclick="closeLogin()">Continue as Reader</button>
+  </div>
+</div>
+
+<!-- =============== AUDIO =============== -->
+<audio id="ambient-audio" loop>
+  <!-- Gentle ambient using Web Audio API oscillator instead of file dependency -->
+</audio>
+
+<script>
+/* ============================================================
+   DATA STORE — localStorage
+   ============================================================ */
+const STORAGE_KEY = 'poetry_posts_v2';
+const NOTES_KEY   = 'poetry_notes_v1';
+const LIKES_KEY   = 'poetry_likes_v1';
+const PREFS_KEY   = 'poetry_prefs_v1';
+
+/* Default sample posts */
+const DEFAULT_POSTS = [
+  {
+    id: 'p1',
+    title: 'The Space Between Words',
+    type: 'poem',
+    lang: 'en',
+    author: 'her',
+    content: `there is a language we have built\nbetween silences —\na grammar of glances,\na syntax of soft sighs.\n\nyou speak in pauses\nand I have learned\nto listen to the white space\nbetween your words.\n\nthis is where we live,\nin the unfinished sentences,\nin the almost-said,\nin the nearly-touched.`,
+    date: new Date(Date.now() - 86400000*5).toISOString()
+  },
+  {
+    id: 'p2',
+    title: 'रात का आकाश',
+    type: 'poem',
+    lang: 'hi',
+    author: 'me',
+    content: `रात के आकाश में\nतुम्हारा नाम लिखता हूँ —\nतारों की स्याही से,\nचाँद की रोशनी में।\n\nहर लम्हा एक कविता है\nजब तुम पास होती हो,\nहर ख़ामोशी एक गज़ल,\nहर साँस एक शेर।\n\nयह रात भी गुज़र जाएगी,\nपर ये शब्द रहेंगे —\nहमारी अपनी दुनिया में,\nहमेशा, हमेशा के लिए।`,
+    date: new Date(Date.now() - 86400000*3).toISOString()
+  },
+  {
+    id: 'p3',
+    title: 'Of Chai and Conversations',
+    type: 'story',
+    lang: 'en',
+    author: 'her',
+    content: `It always begins the same way — two cups of chai, the smell of cardamom, and a question neither of us quite knows how to finish.\n\nShe would sit at the edge of the bed, cradling her cup like it held something precious. And I suppose it did. Every conversation we ever had started that way, tentatively, like we were both afraid of where the words might take us.\n\n"Do you think," she said one evening, the steam curling up between us, "that some feelings don't have names yet?"\n\nI thought about this for a long time. "I think," I said finally, "that we're writing the names right now."\n\nShe smiled into her chai. And I wrote that smile down somewhere in the quietest part of me, where I keep all the things that matter most.`,
+    date: new Date(Date.now() - 86400000*1).toISOString()
+  },
+  {
+    id: 'p4',
+    title: 'तुम और मैं',
+    type: 'poem',
+    lang: 'hi',
+    author: 'her',
+    content: `तुम एक कविता हो\nजो मैंने अभी लिखनी शुरू की है —\nहर पंक्ति में तुम्हारी झलक,\nहर शब्द में तुम्हारी खुशबू।\n\nमैं एक अधूरी कहानी थी\nजब तक तुम नहीं आए;\nअब हर अक्षर अपनी जगह पर है,\nहर वाक्य मुकम्मल है।`,
+    date: new Date(Date.now() - 86400000*0.5).toISOString()
+  }
+];
+
+const DEFAULT_NOTES = [
+  { id: 'n1', text: 'Remember that evening when it rained and we made up stories from the sound of raindrops? ☔', author: 'her', date: new Date(Date.now()-86400000*4).toISOString() },
+  { id: 'n2', text: 'बारिश में भीगना है एक दिन, बस तुम्हारे साथ 🌧️', author: 'me', date: new Date(Date.now()-86400000*2).toISOString() },
+  { id: 'n3', text: '3am conversations are the most honest ones 🌙', author: 'her', date: new Date(Date.now()-86400000*0.8).toISOString() }
+];
+
+function loadPosts() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [...DEFAULT_POSTS];
+  } catch { return [...DEFAULT_POSTS]; }
+}
+function savePosts(posts) { localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); }
+
+function loadNotes() {
+  try {
+    const raw = localStorage.getItem(NOTES_KEY);
+    return raw ? JSON.parse(raw) : [...DEFAULT_NOTES];
+  } catch { return [...DEFAULT_NOTES]; }
+}
+function saveNotes(notes) { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }
+
+function loadLikes() {
+  try { return JSON.parse(localStorage.getItem(LIKES_KEY) || '{}'); } catch { return {}; }
+}
+function saveLikes(likes) { localStorage.setItem(LIKES_KEY, JSON.stringify(likes)); }
+
+function loadPrefs() {
+  try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '{"theme":"light","font":"serif"}'); } catch { return {theme:'light',font:'serif'}; }
+}
+function savePrefs(p) { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); }
+
+let posts = loadPosts();
+let notes = loadNotes();
+let likes = loadLikes();
+let prefs = loadPrefs();
+let currentFilter = 'all';
+let editingPostId = null;
+let loggedIn = false;
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+// Two users: passwords "her123" (Her) and "me123" (Me)
+const USERS = { 'her123': 'her', 'me123': 'me' };
+let currentAuthor = null;
+
+function showLogin() {
+  document.getElementById('login-modal').classList.add('open');
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').textContent = '';
+  setTimeout(() => document.getElementById('login-password').focus(), 200);
+}
+function closeLogin() {
+  document.getElementById('login-modal').classList.remove('open');
+}
+function doLogin() {
+  const pw = document.getElementById('login-password').value.trim();
+  if (USERS[pw]) {
+    currentAuthor = USERS[pw];
+    loggedIn = true;
+    document.body.classList.add('logged-in');
+    document.getElementById('auth-btn').classList.add('hidden');
+    document.getElementById('logout-btn').classList.remove('hidden');
+    document.getElementById('write-nav-btn').style.display = '';
+    document.getElementById('new-post-btn').classList.remove('hidden');
+    document.getElementById('post-author').value = currentAuthor;
+    closeLogin();
+    showToast(`Welcome back ✦ ${currentAuthor === 'her' ? 'Her' : 'Me'}`);
+    renderNotes();
+  } else {
+    document.getElementById('login-error').textContent = 'Hmm, that doesn\'t seem right…';
+  }
+}
+function logout() {
+  loggedIn = false;
+  currentAuthor = null;
+  document.body.classList.remove('logged-in');
+  document.getElementById('auth-btn').classList.remove('hidden');
+  document.getElementById('logout-btn').classList.add('hidden');
+  document.getElementById('write-nav-btn').style.display = 'none';
+  document.getElementById('new-post-btn').classList.add('hidden');
+  showToast('Logged out. Goodbye ✦');
+  renderNotes();
+}
+
+/* ============================================================
+   SECTION NAVIGATION
+   ============================================================ */
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('section-' + name);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  if (name === 'poems') renderPosts();
+  if (name === 'memories') renderNotes();
+  if (name === 'write' && !editingPostId) clearEditor();
+  closeAllDropdowns();
+}
+function showWriteSection() {
+  if (!loggedIn) { showLogin(); return; }
+  editingPostId = null;
+  showSection('write');
+}
+
+/* ============================================================
+   THEME & FONT
+   ============================================================ */
+function setTheme(theme, menuId) {
+  document.body.setAttribute('data-theme', theme);
+  prefs.theme = theme;
+  savePrefs(prefs);
+  if (menuId) {
+    document.querySelectorAll(`#${menuId} .dropdown-item`).forEach(el => el.classList.remove('active'));
+    event && event.target && event.target.classList.add('active');
+  }
+  closeAllDropdowns();
+}
+function setFont(font, menuId) {
+  document.body.className = document.body.className.replace(/font-\w+/g, '');
+  document.body.classList.add('font-' + font);
+  prefs.font = font;
+  savePrefs(prefs);
+  if (menuId) {
+    document.querySelectorAll(`#${menuId} .dropdown-item`).forEach(el => el.classList.remove('active'));
+    event && event.target && event.target.classList.add('active');
+  }
+  closeAllDropdowns();
+}
+function applyPrefs() {
+  setTheme(prefs.theme || 'light');
+  setFont(prefs.font || 'serif');
+  // Update active states
+  document.querySelectorAll('#theme-menu .dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.textContent.toLowerCase().includes(prefs.theme));
+  });
+  document.querySelectorAll('#font-menu .dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.onclick && el.onclick.toString().includes(prefs.font));
+  });
+}
+
+function toggleDropdown(id) {
+  const menu = document.getElementById(id);
+  const wasOpen = menu.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen) menu.classList.add('open');
+  event && event.stopPropagation();
+}
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+}
+document.addEventListener('click', closeAllDropdowns);
+
+/* ============================================================
+   AMBIENT MUSIC — Web Audio API
+   ============================================================ */
+let audioCtx = null, gainNode = null, isPlaying = false;
+const oscillators = [];
+
+function createAmbientMusic() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  gainNode = audioCtx.createGain();
+  gainNode.gain.value = 0.3;
+  gainNode.connect(audioCtx.destination);
+
+  // Layered gentle tones
+  const freqs = [174, 220, 261.63, 329.63, 392];
+  freqs.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.frequency.value = freq;
+    osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+    g.gain.value = 0.04 / (i + 1);
+    osc.connect(g);
+    g.connect(gainNode);
+    osc.start();
+    oscillators.push(osc);
+  });
+}
+
+function toggleMusic() {
+  const bar = document.getElementById('music-bar');
+  if (!bar.classList.contains('visible')) {
+    bar.classList.add('visible');
+    startMusic();
+  } else {
+    bar.classList.remove('visible');
+    stopMusic();
+  }
+}
+function startMusic() {
+  createAmbientMusic();
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  isPlaying = true;
+  document.getElementById('music-play-btn').textContent = '⏸';
+}
+function stopMusic() {
+  if (audioCtx) audioCtx.suspend();
+  isPlaying = false;
+  document.getElementById('music-play-btn').textContent = '▶';
+}
+
+document.getElementById('music-play-btn').addEventListener('click', () => {
+  if (isPlaying) stopMusic(); else startMusic();
+});
+document.getElementById('music-vol').addEventListener('input', e => {
+  if (gainNode) gainNode.gain.value = e.target.value;
+});
+document.getElementById('music-close-btn').addEventListener('click', () => {
+  document.getElementById('music-bar').classList.remove('visible');
+  stopMusic();
+});
+
+/* ============================================================
+   PARTICLES
+   ============================================================ */
+(function spawnParticles() {
+  const container = document.getElementById('particles');
+  const symbols = ['✦', '✿', '◦', '·', '❋', '⟡', '✽', '❀'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    const dur = 10 + Math.random() * 16;
+    const delay = Math.random() * 14;
+    const dx = (Math.random() - 0.5) * 120;
+    const rot = Math.random() * 360;
+    el.style.cssText = `
+      left: ${Math.random() * 100}%;
+      --dur: ${dur}s;
+      --delay: ${delay}s;
+      --dx: ${dx}px;
+      --rot: ${rot}deg;
+      font-size: ${0.55 + Math.random() * 0.6}rem;
+    `;
+    container.appendChild(el);
+  }
+})();
+
+/* ============================================================
+   POSTS — RENDER
+   ============================================================ */
+function renderPosts() {
+  const grid = document.getElementById('posts-grid');
+  let filtered = posts;
+  if (currentFilter !== 'all') {
+    filtered = posts.filter(p => {
+      if (currentFilter === 'poem' || currentFilter === 'story') return p.type === currentFilter;
+      if (currentFilter === 'en' || currentFilter === 'hi') return p.lang === currentFilter || p.lang === 'both';
+      if (currentFilter === 'her' || currentFilter === 'me') return p.author === currentFilter;
+      return true;
+    });
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">🌿</div>
+      <p>No poems here yet. The page waits for words…</p>
+    </div>`;
+    return;
+  }
+
+  const l = loadLikes();
+  grid.innerHTML = filtered.map(p => {
+    const preview = p.content.split('\n').slice(0, 3).join('\n');
+    const likeCount = l[p.id] || 0;
+    const liked = l[p.id + '_me'] ? 'liked' : '';
+    const authorLabel = p.author === 'her' ? 'Her' : 'Me';
+    const langLabel = p.lang === 'hi' ? 'हिंदी' : p.lang === 'both' ? 'Mixed' : 'English';
+    const isHindi = p.lang === 'hi';
+    return `
+    <div class="post-card" onclick="openPost('${p.id}')">
+      <div class="post-card-header">
+        <h3 class="post-card-title" ${isHindi ? 'lang="hi"' : ''}>${p.title}</h3>
+      </div>
+      <div class="post-card-meta">
+        <span class="tag">${p.type === 'poem' ? '✦ Poem' : '✦ Story'}</span>
+        <span class="tag">${langLabel}</span>
+        <span class="author-tag">${authorLabel}</span>
+        <span class="post-date">${formatDate(p.date)}</span>
+      </div>
+      <div class="post-card-preview" ${isHindi ? 'lang="hi"' : ''}>${preview}</div>
+      <div class="post-card-footer">
+        <button class="heart-btn ${liked}" onclick="toggleLike(event,'${p.id}')">
+          <span class="heart-icon">${liked ? '♥' : '♡'}</span>
+          <span>${likeCount}</span>
+        </button>
+        <span class="read-more">Read →</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterPosts(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPosts();
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+/* ============================================================
+   LIKES
+   ============================================================ */
+function toggleLike(e, id) {
+  e.stopPropagation();
+  const l = loadLikes();
+  const likedKey = id + '_me';
+  if (l[likedKey]) {
+    l[id] = Math.max(0, (l[id] || 0) - 1);
+    delete l[likedKey];
+  } else {
+    l[id] = (l[id] || 0) + 1;
+    l[likedKey] = true;
+  }
+  saveLikes(l);
+  renderPosts();
+}
+
+/* ============================================================
+   POST MODAL
+   ============================================================ */
+function openPost(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  const l = loadLikes();
+  const likeCount = l[id] || 0;
+  const liked = l[id + '_me'] ? 'liked' : '';
+  const isHindi = post.lang === 'hi';
+  const langLabel = post.lang === 'hi' ? 'हिंदी' : post.lang === 'both' ? 'Mixed' : 'English';
+
+  document.getElementById('modal-title').textContent = post.title;
+  document.getElementById('modal-title').setAttribute('lang', isHindi ? 'hi' : 'en');
+
+  document.getElementById('modal-meta').innerHTML = `
+    <span class="tag">${post.type === 'poem' ? '✦ Poem' : '✦ Story'}</span>
+    <span class="tag">${langLabel}</span>
+    <span class="author-tag">${post.author === 'her' ? 'Her' : 'Me'}</span>
+    <span class="post-date">${formatDate(post.date)}</span>
+  `;
+
+  const contentEl = document.getElementById('modal-content');
+  contentEl.textContent = post.content;
+  contentEl.className = `modal-content ${post.type === 'poem' ? 'type-poem' : ''}`;
+  contentEl.setAttribute('lang', isHindi ? 'hi' : 'en');
+
+  document.getElementById('modal-footer').innerHTML = `
+    <button class="heart-btn ${liked}" onclick="modalLike(this,'${id}')">
+      <span class="heart-icon">${liked ? '♥' : '♡'}</span>
+      <span id="modal-like-count-${id}">${likeCount}</span>
+    </button>
+    ${loggedIn ? `<div style="display:flex;gap:0.5rem;">
+      <button class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.72rem;" onclick="editPost('${id}')">Edit</button>
+    </div>` : ''}
+  `;
+
+  document.getElementById('post-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('post-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('post-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('post-modal')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function modalLike(btn, id) {
+  const l = loadLikes();
+  const likedKey = id + '_me';
+  if (l[likedKey]) {
+    l[id] = Math.max(0, (l[id] || 0) - 1);
+    delete l[likedKey];
+    btn.classList.remove('liked');
+    btn.querySelector('.heart-icon').textContent = '♡';
+  } else {
+    l[id] = (l[id] || 0) + 1;
+    l[likedKey] = true;
+    btn.classList.add('liked');
+    btn.querySelector('.heart-icon').textContent = '♥';
+    btn.querySelector('.heart-icon').style.animation = 'none';
+    setTimeout(() => { btn.querySelector('.heart-icon').style.animation = ''; }, 10);
+  }
+  saveLikes(l);
+  const countEl = document.getElementById(`modal-like-count-${id}`);
+  if (countEl) countEl.textContent = l[id] || 0;
+  renderPosts();
+}
+
+/* ============================================================
+   WRITE / EDIT / DELETE
+   ============================================================ */
+function savePost() {
+  const title   = document.getElementById('post-title').value.trim();
+  const type    = document.getElementById('post-type').value;
+  const lang    = document.getElementById('post-lang').value;
+  const author  = document.getElementById('post-author').value;
+  const content = document.getElementById('post-content').value.trim();
+
+  if (!title || !content) { showToast('Please add a title and content ✦'); return; }
+
+  if (editingPostId) {
+    const idx = posts.findIndex(p => p.id === editingPostId);
+    if (idx > -1) {
+      posts[idx] = { ...posts[idx], title, type, lang, author, content };
+      showToast('Post updated ✦');
+    }
+    editingPostId = null;
+  } else {
+    posts.unshift({
+      id: 'p' + Date.now(),
+      title, type, lang, author, content,
+      date: new Date().toISOString()
+    });
+    showToast('Published ✦ Your words are safe now.');
+  }
+  savePosts(posts);
+  clearEditor();
+  showSection('poems');
+}
+
+function editPost(id) {
+  if (!loggedIn) return;
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  editingPostId = id;
+  document.getElementById('post-title').value = post.title;
+  document.getElementById('post-type').value = post.type;
+  document.getElementById('post-lang').value = post.lang;
+  document.getElementById('post-author').value = post.author;
+  document.getElementById('post-content').value = post.content;
+  document.getElementById('editor-title').textContent = 'Edit';
+  document.getElementById('delete-post-btn').classList.remove('hidden');
+  closeModal();
+  showSection('write');
+}
+
+function clearEditor() {
+  editingPostId = null;
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-type').value = 'poem';
+  document.getElementById('post-lang').value = 'en';
+  document.getElementById('post-author').value = currentAuthor || 'her';
+  document.getElementById('post-content').value = '';
+  document.getElementById('editor-title').textContent = 'Write Something';
+  document.getElementById('delete-post-btn').classList.add('hidden');
+}
+
+function deleteCurrentPost() {
+  if (!editingPostId) return;
+  if (!confirm('Delete this post? This cannot be undone.')) return;
+  posts = posts.filter(p => p.id !== editingPostId);
+  savePosts(posts);
+  editingPostId = null;
+  showSection('poems');
+  showToast('Post deleted.');
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+function renderNotes() {
+  const grid = document.getElementById('notes-grid');
+  if (notes.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><p>No memories yet. Leave the first note…</p></div>`;
+    return;
+  }
+  const pastelColors = [
+    'rgba(255,220,210,0.45)', 'rgba(255,240,200,0.45)', 'rgba(220,240,220,0.45)',
+    'rgba(220,225,255,0.45)', 'rgba(255,220,240,0.45)'
+  ];
+  grid.innerHTML = notes.map((n, i) => `
+    <div class="note-card" style="background:${pastelColors[i % pastelColors.length]};">
+      <div class="note-card-text">${escapeHtml(n.text)}</div>
+      <div class="note-card-meta">
+        <span>${n.author === 'her' ? 'Her ✦' : 'Me ✦'} ${formatDate(n.date)}</span>
+        <button class="note-delete-btn" onclick="deleteNote('${n.id}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addNote() {
+  const text = document.getElementById('note-input').value.trim();
+  if (!text) return;
+  notes.unshift({
+    id: 'n' + Date.now(),
+    text,
+    author: currentAuthor || 'her',
+    date: new Date().toISOString()
+  });
+  saveNotes(notes);
+  document.getElementById('note-input').value = '';
+  renderNotes();
+  showToast('Note saved ✦');
+}
+
+function deleteNote(id) {
+  notes = notes.filter(n => n.id !== id);
+  saveNotes(notes);
+  renderNotes();
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(function init() {
+  applyPrefs();
+  document.getElementById('post-author').value = 'her';
+})();
+</script>
+</body>
+</html>
