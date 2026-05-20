@@ -1389,6 +1389,38 @@ body.logged-in .add-note-form { display: block; }
   <!-- Gentle ambient using Web Audio API oscillator instead of file dependency -->
 </audio>
 
+<!-- =============== FIREBASE (cloud sync + auth) =============== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  // 🔧 PASTE YOUR CONFIG VALUES HERE (from Firebase Console → Project Settings → Web App)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAd0ztRja20gT-sFFhmcbEI3raoH-FcMWM",
+    authDomain: "meripoetries.firebaseapp.com",
+    projectId: "meripoetries",
+    storageBucket: "meripoetries.firebasestorage.app",
+    messagingSenderId: "1090115137325",
+    appId: "1:1090115137325:web:0490fabdffc3dfa652eda4"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const db   = getFirestore(app);
+  const auth = getAuth(app);
+  // Keep user signed in across reloads / tabs
+  setPersistence(auth, browserLocalPersistence).catch(()=>{});
+
+  // Expose to the non-module script below
+  window.__fb = {
+    db, doc, getDoc, setDoc, onSnapshot,
+    auth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  };
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
 <script>
 /* ============================================================
    DATA STORE — localStorage
@@ -1444,13 +1476,17 @@ const DEFAULT_NOTES = [
   { id: 'n3', text: '3am conversations are the most honest ones 🌙', author: 'her', date: new Date(Date.now()-86400000*0.8).toISOString() }
 ];
 
+/* localStorage acts as offline cache; Firestore is source of truth once synced */
 function loadPosts() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : [...DEFAULT_POSTS];
   } catch { return [...DEFAULT_POSTS]; }
 }
-function savePosts(posts) { localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); }
+function savePosts(posts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  cloudPush('posts', { items: posts });
+}
 
 function loadNotes() {
   try {
@@ -1458,17 +1494,81 @@ function loadNotes() {
     return raw ? JSON.parse(raw) : [...DEFAULT_NOTES];
   } catch { return [...DEFAULT_NOTES]; }
 }
-function saveNotes(notes) { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }
+function saveNotes(notes) {
+  localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+  cloudPush('notes', { items: notes });
+}
 
 function loadLikes() {
   try { return JSON.parse(localStorage.getItem(LIKES_KEY) || '{}'); } catch { return {}; }
 }
-function saveLikes(likes) { localStorage.setItem(LIKES_KEY, JSON.stringify(likes)); }
+function saveLikes(likes) {
+  localStorage.setItem(LIKES_KEY, JSON.stringify(likes));
+  cloudPush('likes', { data: likes });
+}
 
 function loadPrefs() {
   try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '{"theme":"light","font":"serif"}'); } catch { return {theme:'light',font:'serif'}; }
 }
 function savePrefs(p) { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); }
+
+/* ============================================================
+   CLOUD SYNC — Firestore (fires only when window.__fb is ready)
+   ============================================================ */
+let cloudReady = false;
+let suppressNextLocalEcho = false;  // avoid echo loops on own writes
+
+function cloudPush(docName, payload) {
+  if (!cloudReady || !window.__fb) return;       // offline or not initialised → localStorage only
+  const { db, doc, setDoc } = window.__fb;
+  setDoc(doc(db, 'appdata', docName), { ...payload, updatedAt: Date.now() })
+    .catch(err => console.warn('Cloud push failed:', err));
+}
+
+function setupCloudSync() {
+  if (!window.__fb) return;
+  const { db, doc, getDoc, setDoc, onSnapshot } = window.__fb;
+  cloudReady = true;
+
+  // POSTS listener
+  onSnapshot(doc(db, 'appdata', 'posts'), async (snap) => {
+    if (snap.exists()) {
+      const items = snap.data().items || [];
+      posts = items;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+      renderPosts();
+    } else {
+      // First time ever — seed cloud with whatever we have locally
+      await setDoc(doc(db, 'appdata', 'posts'), { items: posts, updatedAt: Date.now() });
+    }
+  }, err => console.warn('posts snapshot err', err));
+
+  // NOTES listener
+  onSnapshot(doc(db, 'appdata', 'notes'), async (snap) => {
+    if (snap.exists()) {
+      notes = snap.data().items || [];
+      localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+      renderNotes();
+    } else {
+      await setDoc(doc(db, 'appdata', 'notes'), { items: notes, updatedAt: Date.now() });
+    }
+  }, err => console.warn('notes snapshot err', err));
+
+  // LIKES listener
+  onSnapshot(doc(db, 'appdata', 'likes'), async (snap) => {
+    if (snap.exists()) {
+      likes = snap.data().data || {};
+      localStorage.setItem(LIKES_KEY, JSON.stringify(likes));
+      renderPosts();
+    } else {
+      await setDoc(doc(db, 'appdata', 'likes'), { data: likes, updatedAt: Date.now() });
+    }
+  }, err => console.warn('likes snapshot err', err));
+}
+
+// Wait for the Firebase module to finish initialising, then start sync
+if (window.__fb) setupCloudSync();
+else window.addEventListener('firebase-ready', setupCloudSync, { once: true });
 
 let posts = loadPosts();
 let notes = loadNotes();
@@ -1479,10 +1579,11 @@ let editingPostId = null;
 let loggedIn = false;
 
 /* ============================================================
-   AUTH
+   AUTH — Firebase email/password (public read, restricted write)
    ============================================================ */
-// Two users: passwords "her123" (Her) and "me123" (Me)
-const USERS = { 'her123': 'her', 'me123': 'me' };
+// Hidden email mapping. The PASSWORD is what users actually type & remember.
+// You'll create both accounts in Firebase Console → Authentication → Users.
+const AUTH_EMAILS = { her: 'her@ourpoetry.app', me: 'me@ourpoetry.app' };
 let currentAuthor = null;
 
 function showLogin() {
@@ -1494,35 +1595,87 @@ function showLogin() {
 function closeLogin() {
   document.getElementById('login-modal').classList.remove('open');
 }
-function doLogin() {
-  const pw = document.getElementById('login-password').value.trim();
-  if (USERS[pw]) {
-    currentAuthor = USERS[pw];
-    loggedIn = true;
-    document.body.classList.add('logged-in');
-    document.getElementById('auth-btn').classList.add('hidden');
-    document.getElementById('logout-btn').classList.remove('hidden');
-    document.getElementById('write-nav-btn').style.display = '';
-    document.getElementById('new-post-btn').classList.remove('hidden');
-    document.getElementById('post-author').value = currentAuthor;
-    closeLogin();
-    showToast(`Welcome back ✦ ${currentAuthor === 'her' ? 'Her' : 'Me'}`);
-    renderNotes();
-  } else {
-    document.getElementById('login-error').textContent = 'Hmm, that doesn\'t seem right…';
-  }
+
+// UI helpers — called by both manual login and auto-restore on reload
+function applyLoginUI(author) {
+  currentAuthor = author;
+  loggedIn = true;
+  document.body.classList.add('logged-in');
+  document.getElementById('auth-btn').classList.add('hidden');
+  document.getElementById('logout-btn').classList.remove('hidden');
+  document.getElementById('write-nav-btn').style.display = '';
+  document.getElementById('new-post-btn').classList.remove('hidden');
+  const authorSel = document.getElementById('post-author');
+  if (authorSel) authorSel.value = currentAuthor;
+  renderNotes();
+  renderPosts();
 }
-function logout() {
-  loggedIn = false;
+function applyLogoutUI() {
   currentAuthor = null;
+  loggedIn = false;
   document.body.classList.remove('logged-in');
   document.getElementById('auth-btn').classList.remove('hidden');
   document.getElementById('logout-btn').classList.add('hidden');
   document.getElementById('write-nav-btn').style.display = 'none';
   document.getElementById('new-post-btn').classList.add('hidden');
-  showToast('Logged out. Goodbye ✦');
   renderNotes();
+  renderPosts();
 }
+
+async function doLogin() {
+  const pw = document.getElementById('login-password').value.trim();
+  const errEl = document.getElementById('login-error');
+  if (!pw) { errEl.textContent = 'Please enter your password.'; return; }
+  if (!window.__fb) { errEl.textContent = 'Connecting… try again in a moment.'; return; }
+
+  const { auth, signInWithEmailAndPassword } = window.__fb;
+  errEl.textContent = 'Signing in…';
+
+  // Try 'her' first, then 'me' — whichever password matches wins.
+  // Try last-used author first to avoid wasted attempts on the wrong account.
+  const lastAuthor = localStorage.getItem('last_author') || 'her';
+  const tryOrder = lastAuthor === 'me' ? ['me','her'] : ['her','me'];
+
+  for (const who of tryOrder) {
+    try {
+      await signInWithEmailAndPassword(auth, AUTH_EMAILS[who], pw);
+      // Success — onAuthStateChanged below will fire and call applyLoginUI
+      localStorage.setItem('last_author', who);
+      closeLogin();
+      showToast(`Welcome back ✦ ${who === 'her' ? 'Her' : 'Me'}`);
+      return;
+    } catch (e) {
+      // wrong password for this account — try the other
+    }
+  }
+  errEl.textContent = 'Hmm, that doesn\'t seem right…';
+}
+
+async function logout() {
+  if (window.__fb) {
+    try { await window.__fb.signOut(window.__fb.auth); } catch {}
+  }
+  // onAuthStateChanged will fire and call applyLogoutUI
+  showToast('Logged out. Goodbye ✦');
+}
+
+// Auto-restore session on page load (Firebase keeps user signed-in via IndexedDB)
+function setupAuthListener() {
+  if (!window.__fb) return;
+  const { auth, onAuthStateChanged } = window.__fb;
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // Identify which of our two users this is by email
+      let who = null;
+      for (const [k, v] of Object.entries(AUTH_EMAILS)) if (v === user.email) who = k;
+      if (who) applyLoginUI(who);
+    } else {
+      applyLogoutUI();
+    }
+  });
+}
+if (window.__fb) setupAuthListener();
+else window.addEventListener('firebase-ready', setupAuthListener, { once: true });
 
 /* ============================================================
    SECTION NAVIGATION
@@ -1707,7 +1860,7 @@ function renderPosts() {
   grid.innerHTML = filtered.map(p => {
     const preview = p.content.split('\n').slice(0, 3).join('\n');
     const likeCount = l[p.id] || 0;
-    const liked = l[p.id + '_me'] ? 'liked' : '';
+    const liked = (currentAuthor && l[p.id + '_' + currentAuthor]) ? 'liked' : '';
     const authorLabel = p.author === 'her' ? 'Her' : 'Me';
     const langLabel = p.lang === 'hi' ? 'हिंदी' : p.lang === 'both' ? 'Mixed' : 'English';
     const isHindi = p.lang === 'hi';
@@ -1747,19 +1900,16 @@ function formatDate(iso) {
 }
 
 /* ============================================================
-   LIKES
+   LIKES — per-user flags so 'her' and 'me' have separate hearts
    ============================================================ */
 function toggleLike(e, id) {
   e.stopPropagation();
+  if (!currentAuthor) { showLogin(); return; }   // must be logged in to like
   const l = loadLikes();
-  const likedKey = id + '_me';
-  if (l[likedKey]) {
-    l[id] = Math.max(0, (l[id] || 0) - 1);
-    delete l[likedKey];
-  } else {
-    l[id] = (l[id] || 0) + 1;
-    l[likedKey] = true;
-  }
+  const myKey = id + '_' + currentAuthor;        // _her or _me
+  if (l[myKey]) delete l[myKey]; else l[myKey] = true;
+  // Recompute total count from both users' flags
+  l[id] = (l[id + '_her'] ? 1 : 0) + (l[id + '_me'] ? 1 : 0);
   saveLikes(l);
   renderPosts();
 }
@@ -1772,7 +1922,7 @@ function openPost(id) {
   if (!post) return;
   const l = loadLikes();
   const likeCount = l[id] || 0;
-  const liked = l[id + '_me'] ? 'liked' : '';
+  const liked = (currentAuthor && l[id + '_' + currentAuthor]) ? 'liked' : '';
   const isHindi = post.lang === 'hi';
   const langLabel = post.lang === 'hi' ? 'हिंदी' : post.lang === 'both' ? 'Mixed' : 'English';
 
@@ -1814,21 +1964,21 @@ document.getElementById('post-modal').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 function modalLike(btn, id) {
+  if (!currentAuthor) { showLogin(); return; }
   const l = loadLikes();
-  const likedKey = id + '_me';
-  if (l[likedKey]) {
-    l[id] = Math.max(0, (l[id] || 0) - 1);
-    delete l[likedKey];
+  const myKey = id + '_' + currentAuthor;
+  if (l[myKey]) {
+    delete l[myKey];
     btn.classList.remove('liked');
     btn.querySelector('.heart-icon').textContent = '♡';
   } else {
-    l[id] = (l[id] || 0) + 1;
-    l[likedKey] = true;
+    l[myKey] = true;
     btn.classList.add('liked');
     btn.querySelector('.heart-icon').textContent = '♥';
     btn.querySelector('.heart-icon').style.animation = 'none';
     setTimeout(() => { btn.querySelector('.heart-icon').style.animation = ''; }, 10);
   }
+  l[id] = (l[id + '_her'] ? 1 : 0) + (l[id + '_me'] ? 1 : 0);
   saveLikes(l);
   const countEl = document.getElementById(`modal-like-count-${id}`);
   if (countEl) countEl.textContent = l[id] || 0;
